@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item app:showAsAction="always"
+        android:title=" "
+        android:icon="@drawable/menu_icon"
+        >
+        <menu >
+            <item
+                android:id="@+id/accountMenuBtn"
+                android:icon="@drawable/profile_icon"
+                android:title="Account"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/logoutMenuBtn"
+                android:icon="@drawable/logout_icon"
+                android:title="Log Out"
+                app:showAsAction="never" />
+        </menu>
+    </item>
+</menu>

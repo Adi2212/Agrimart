@@ -1,0 +1,14 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.MyApp" parent="Theme.MaterialComponents.Light.NoActionBar">
+
+        <item name="colorControlNormal">@color/startcolor</item>
+        <item name="colorControlActivated">@color/endcolor</item>
+        <item name="colorControlHighlight">@color/endcolor</item>
+        <item name="android:statusBarColor">@color/endcolor</item>
+        <item name="android:fontFamily">@font/primaryfontmarkazi</item>
+        <item name="android:textSize">22dp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="Theme.MyApp.app" parent="Theme.MyApp" />
+</resources>

@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">AgriMart</string>
+
+
+    <string-array name="dropdown_items" >
+        <item>Select Your Fruit </item>
+        <item>Mango</item>
+        <item>Banana</item>
+        <item>Guava</item>
+        <item>Apple</item>
+        <item>Orange</item>
+        <item>Papaya</item>
+        <item>Pineapple</item>
+        <item>Pomegranate</item>
+        <item>Jack fruit</item>
+        <item>Coconut</item>
+        <item>Litchi</item>
+        <item>Chikoo (Sapota)</item>
+        <item>Watermelon</item>
+        <item>Muskmelon</item>
+        <item>Custard Apple (Sitaphal)</item>
+        <item>Grapes</item>
+        <item>Strawberry</item>
+        <item>Plum</item>
+        <item>Peach</item>
+        <item>Apricot</item>
+        <item>Fig</item>
+        <item>Blackberry (Jamun)</item>
+        <item>Tamarind</item>
+        <item>Mulberry</item>
+        <item>Starfruit</item>
+        <item>Amla (Indian Gooseberry)</item>
+        <item>Bael (Wood Apple)</item>
+        <item>Ber (Indian Jujube)</item>
+        <item>Karonda (Carissa)</item>
+        <item>Rose Apple (Jamrul)</item>
+    </string-array>
+
+
+</resources>

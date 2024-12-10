@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar"
+        android:background="@color/endcolor"
+        app:title="@string/app_name"
+        android:theme="@style/Theme.Material3.Light.NoActionBar"
+        android:popupTheme="@style/Theme.Material3.Light.NoActionBar"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:padding="5dp"
+        android:fontFamily="@font/primaryfontmarkazi"
+        android:text="welcome, to the AgriMart !!!"
+        android:textAlignment="center"
+        android:layout_gravity="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="25dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="9"
+            android:fontFamily="@font/primaryfontmarkazi"
+            android:paddingLeft="10dp"
+            android:text="To List The Product, please Click on beside button ..."
+            android:textSize="25dp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/ListProduct"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="List Product"
+            android:background="@drawable/btn_shape"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:text="Your Listed product:- "
+        android:textSize="30dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>
