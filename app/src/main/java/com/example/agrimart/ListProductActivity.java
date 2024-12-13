@@ -53,11 +53,13 @@ public class ListProductActivity extends AppCompatActivity {
         etPhoneNumber = findViewById(R.id.etPhoneNumber);
         ProductList = findViewById(R.id.mySpinner);
 
-        // Spinner setup
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.dropdown_items, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        ProductList.setAdapter(adapter);
+
+        String productType = getIntent().getStringExtra("PRODUCT_TYPE");
+
+        if (productType != null) {
+            //selectedProductType.setText("Selected Product: " + productType);
+            loadSpinnerData(productType);
+        }
 
         ProductList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -82,10 +84,34 @@ public class ListProductActivity extends AppCompatActivity {
         });
     }
 
+    private void loadSpinnerData(String productType) {
+        int arrayResourceId;
+
+        switch (productType) {
+            case "Fruits":
+                arrayResourceId = R.array.dropdown_fruits;
+                break;
+            case "Beans":
+                arrayResourceId = R.array.dropdown_beans;
+                break;
+            case "Vegetables":
+                arrayResourceId = R.array.dropdown_vegetables;
+                break;
+            default:
+                arrayResourceId = R.array.dropdown_fruits;
+                break;
+        }
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this, arrayResourceId, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ProductList.setAdapter(adapter);
+    }
+
     private boolean canSubmit() {
         long lastSubmissionTime = sharedPreferences.getLong(LAST_SUBMISSION_TIME, 0);
         long currentTime = Calendar.getInstance().getTimeInMillis();
-        return (currentTime - lastSubmissionTime) >= 0;//set time limit as you need..
+        return (currentTime - lastSubmissionTime) >= HALF_HOUR_MILLIS;
     }
 
 

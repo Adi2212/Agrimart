@@ -5,6 +5,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,18 +38,32 @@ public class MainActivity extends AppCompatActivity {
     private ProductAdapter productAdapter;
     private AppCompatButton listProduct;
     private List<Product> productList = new ArrayList<>();
+    private RadioGroup productRadioGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        productRadioGroup = findViewById(R.id.productRadioGroup);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        listProduct = findViewById(R.id.ListProduct);
-        listProduct.setOnClickListener(v -> {
-            startActivity(new Intent(MainActivity.this, ListProductActivity.class));
+        findViewById(R.id.ListProduct).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int selectedId = productRadioGroup.getCheckedRadioButtonId();
+
+                if (selectedId == -1) {
+                    Toast.makeText(MainActivity.this, "Please select a product", Toast.LENGTH_SHORT).show();
+                } else {
+                    RadioButton selectedButton = findViewById(selectedId);
+                    String selectedProduct = selectedButton.getText().toString();
+
+                    Intent intent = new Intent(MainActivity.this, ListProductActivity.class);
+                    intent.putExtra("PRODUCT_TYPE", selectedProduct);
+                    startActivity(intent);
+                }
+            }
         });
 
         mAuth = FirebaseAuth.getInstance();

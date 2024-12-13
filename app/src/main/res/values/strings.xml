@@ -2,7 +2,7 @@
     <string name="app_name">AgriMart</string>
 
 
-    <string-array name="dropdown_items" >
+    <string-array name="dropdown_fruits" >
         <item>Select Your Fruit </item>
         <item>Mango</item>
         <item>Banana</item>
@@ -35,6 +35,57 @@
         <item>Karonda (Carissa)</item>
         <item>Rose Apple (Jamrul)</item>
     </string-array>
+
+    <string-array name="dropdown_beans">
+        <item>Select Your Bean</item>
+        <item>Kidney Beans (Rajma)</item>
+        <item>Black Gram (Urad Dal)</item>
+        <item>Green Gram (Moong Dal)</item>
+        <item>Chickpeas (Chana)</item>
+        <item>Red Lentils (Masoor Dal)</item>
+        <item>Pigeon Peas (Toor Dal)</item>
+        <item>Black-eyed Peas (Lobia)</item>
+        <item>Horse Gram (Kulthi)</item>
+        <item>Soya Beans</item>
+        <item>Broad Beans (Sem)</item>
+        <item>Winged Beans</item>
+        <item>Cluster Beans (Guar)</item>
+        <item>Field Beans (Val Dal)</item>
+        <item>French Beans</item>
+        <item>Moth Beans</item>
+    </string-array>
+
+    <string-array name="dropdown_vegetables">
+        <item>Select Your Vegetable</item>
+        <item>Potato (Aloo)</item>
+        <item>Onion (Pyaaz)</item>
+        <item>Tomato (Tamatar)</item>
+        <item>Brinjal (Baingan)</item>
+        <item>Okra (Bhindi)</item>
+        <item>Bitter Gourd (Karela)</item>
+        <item>Ridge Gourd (Turai)</item>
+        <item>Bottle Gourd (Lauki)</item>
+        <item>Pointed Gourd (Parwal)</item>
+        <item>Drumstick (Sahjan)</item>
+        <item>Spinach (Palak)</item>
+        <item>Fenugreek Leaves (Methi)</item>
+        <item>Cabbage (Patta Gobhi)</item>
+        <item>Cauliflower (Phool Gobhi)</item>
+        <item>Radish (Mooli)</item>
+        <item>Carrot (Gajar)</item>
+        <item>Beetroot (Chukandar)</item>
+        <item>Turnip (Shalgam)</item>
+        <item>Green Peas (Matar)</item>
+        <item>Capsicum (Shimla Mirch)</item>
+        <item>Pumpkin (Kaddu)</item>
+        <item>Sweet Corn (Makka)</item>
+        <item>Cucumber (Kheera)</item>
+        <item>Garlic (Lahsun)</item>
+        <item>Ginger (Adrak)</item>
+        <item>Chili (Mirch)</item>
+    </string-array>
+
+
 
 
 </resources>

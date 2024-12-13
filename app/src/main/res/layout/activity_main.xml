@@ -31,7 +31,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="25dp"
+        android:orientation="vertical"
         android:gravity="center_vertical">
+
 
         <TextView
             android:layout_width="match_parent"
@@ -40,14 +42,44 @@
             android:fontFamily="@font/primaryfontmarkazi"
             android:paddingLeft="10dp"
             android:text="To List The Product, please Click on beside button ..."
-            android:textSize="25dp"/>
+            android:textSize="25dp" />
+
+
+        <!-- RadioGroup to enforce single selection -->
+        <RadioGroup
+            android:id="@+id/productRadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/fruitsButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fruits" />
+
+            <RadioButton
+                android:id="@+id/beensButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Beans" />
+
+            <RadioButton
+                android:id="@+id/vegiesButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Vegetables" />
+        </RadioGroup>
+
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/ListProduct"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="List Product"
             android:background="@drawable/btn_shape"/>
+
     </LinearLayout>
 
     <TextView
