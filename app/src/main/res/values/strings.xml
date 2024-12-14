@@ -2,7 +2,7 @@
     <string name="app_name">AgriMart</string>
 
 
-    <string-array name="dropdown_fruits" >
+    <string-array name="dropdown_fruits">
         <item>Select Your Fruit </item>
         <item>Mango</item>
         <item>Banana</item>
@@ -84,8 +84,6 @@
         <item>Ginger (Adrak)</item>
         <item>Chili (Mirch)</item>
     </string-array>
-
-
 
 
 </resources>

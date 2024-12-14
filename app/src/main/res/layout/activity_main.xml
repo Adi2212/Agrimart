@@ -30,21 +30,18 @@
             android:text="Welcome to the AgriMart !!!"
             android:textAlignment="center" />
 
-        <LinearLayout
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="220dp"
             android:layout_margin="10dp"
-            android:background="@drawable/btn_shape">
+            app:cardCornerRadius="20dp">
+
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/viewPager"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
-                android:layout_centerInParent="true"
-                />
-        </LinearLayout>
-
-
-
+                android:layout_centerInParent="true" />
+        </androidx.cardview.widget.CardView>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -70,19 +67,19 @@
                     android:id="@+id/fruitsButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Fruits" />
+                    android:text="Fruits"/>
 
                 <RadioButton
                     android:id="@+id/beansButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Beans" />
+                    android:text="Beans"/>
 
                 <RadioButton
                     android:id="@+id/vegiesButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Vegetables" />
+                    android:text="Vegetables"/>
             </RadioGroup>
 
             <androidx.appcompat.widget.AppCompatButton
@@ -93,22 +90,19 @@
                 android:layout_marginTop="10dp"
                 android:padding="10dp"
                 android:text="List Product"
-                android:background="@drawable/btn_shape" />
-
+                android:background="@drawable/btn_shape"/>
         </LinearLayout>
-
-        <TextView
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/gotoProducts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:text="Your Listed Product:"
-            android:textSize="24sp" />
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:text="List Product"
+            android:background="@drawable/btn_shape"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+
 
     </LinearLayout>
 </ScrollView>

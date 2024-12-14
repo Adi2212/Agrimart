@@ -37,12 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private DatabaseReference databaseRef;
-    private RecyclerView recyclerView;
-    private ProductAdapter productAdapter;
-    private AppCompatButton listProduct;
-    private List<Product> productList = new ArrayList<>();
     private RadioGroup productRadioGroup;
-
     private ViewPager2 viewPager;
     private List<Integer> images;
     private int currentPage = 0;
@@ -61,6 +56,13 @@ public class MainActivity extends AppCompatActivity {
         productRadioGroup = findViewById(R.id.productRadioGroup);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        findViewById(R.id.gotoProducts).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ProductsActivity.class));
+            }
+        });
 
         findViewById(R.id.ListProduct).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,10 +85,6 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         databaseRef = FirebaseDatabase.getInstance().getReference("Users");
 
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        loadProductsFromFirebase();
     }
 
     private void initializeSlideshow() {
@@ -136,47 +134,9 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(runnable, 4000);
     }
 
-    private void loadProductsFromFirebase() {
-        FirebaseUser user = mAuth.getCurrentUser();
 
-        if (user != null) {
-            String userEmail = user.getEmail();
-            String formattedEmail = userEmail.replace(".", "_");
 
-            databaseRef.child(formattedEmail).child("products").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    productList.clear();
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        Product product = snapshot.getValue(Product.class);
-                        if (product != null) {
-                            product.setId(snapshot.getKey());
-                            productList.add(product);
-                        }
-                    }
 
-                    productAdapter = new ProductAdapter(productList, product -> deleteProductFromFirebase(product, formattedEmail));
-                    recyclerView.setAdapter(productAdapter);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Toast.makeText(MainActivity.this, "Failed to load products.", Toast.LENGTH_SHORT).show();
-                }
-            });
-        } else {
-            Toast.makeText(this, "User not logged in.", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void deleteProductFromFirebase(Product product, String userId) {
-        databaseRef.child(userId).child("products").child(product.getId()).removeValue()
-                .addOnSuccessListener(aVoid -> {
-                    productAdapter.removeProduct(product);
-                    Toast.makeText(MainActivity.this, "Product deleted successfully.", Toast.LENGTH_SHORT).show();
-                })
-                .addOnFailureListener(e -> Toast.makeText(MainActivity.this, "Failed to delete product.", Toast.LENGTH_SHORT).show());
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
