@@ -1,96 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".MainActivity">
-
-    <androidx.appcompat.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/toolbar"
-        android:background="@color/endcolor"
-        app:title="@string/app_name"
-        android:theme="@style/Theme.Material3.Light.NoActionBar"
-        android:popupTheme="@style/Theme.Material3.Light.NoActionBar"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="30dp"
-        android:padding="5dp"
-        android:fontFamily="@font/primaryfontmarkazi"
-        android:text="welcome, to the AgriMart !!!"
-        android:textAlignment="center"
-        android:layout_gravity="center"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="25dp"
-        android:orientation="vertical"
-        android:gravity="center_vertical">
+        android:orientation="vertical">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/endcolor"
+            app:title="@string/app_name"
+            android:theme="@style/Theme.Material3.Light.NoActionBar"
+            android:popupTheme="@style/Theme.Material3.Light.NoActionBar" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="9"
+            android:textSize="24sp"
+            android:padding="10dp"
             android:fontFamily="@font/primaryfontmarkazi"
-            android:paddingLeft="10dp"
-            android:text="To List The Product, please Click on beside button ..."
-            android:textSize="25dp" />
+            android:text="Welcome to the AgriMart !!!"
+            android:textAlignment="center" />
 
-
-        <!-- RadioGroup to enforce single selection -->
-        <RadioGroup
-            android:id="@+id/productRadioGroup"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="20dp"
             android:orientation="vertical">
 
-            <RadioButton
-                android:id="@+id/fruitsButton"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/primaryfontmarkazi"
+                android:paddingLeft="10dp"
+                android:text="To list the product, please click on the button below:"
+                android:textSize="20sp" />
+
+            <RadioGroup
+                android:id="@+id/productRadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/fruitsButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fruits" />
+
+                <RadioButton
+                    android:id="@+id/beansButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Beans" />
+
+                <RadioButton
+                    android:id="@+id/vegiesButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Vegetables" />
+            </RadioGroup>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/ListProduct"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Fruits" />
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text="List Product"
+                android:background="@drawable/btn_shape" />
 
-            <RadioButton
-                android:id="@+id/beensButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Beans" />
+        </LinearLayout>
 
-            <RadioButton
-                android:id="@+id/vegiesButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Vegetables" />
-        </RadioGroup>
-
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/ListProduct"
-            android:layout_width="120dp"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="List Product"
-            android:background="@drawable/btn_shape"/>
+            android:layout_marginLeft="5dp"
+            android:text="Your Listed Product:"
+            android:textSize="24sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"/>
 
     </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:text="Your Listed product:- "
-        android:textSize="30dp"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-</LinearLayout>
+</ScrollView>

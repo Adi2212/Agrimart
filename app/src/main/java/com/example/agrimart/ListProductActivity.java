@@ -32,7 +32,7 @@ public class ListProductActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private static final String PREFS_NAME = "ProductSubmissionPrefs";
     private static final String LAST_SUBMISSION_TIME = "lastSubmissionTime";
-    private static final long HALF_HOUR_MILLIS = 30 * 60 * 1000; // 30 minutes in milliseconds
+    private static final long HALF_HOUR_MILLIS = 30 * 60 * 1000 * 0; //remove * 0 for half hr
 
 
     @Override
