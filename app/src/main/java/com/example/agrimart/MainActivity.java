@@ -3,9 +3,11 @@ package com.example.agrimart;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -16,6 +18,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.agrimart.adapter.ProductAdapter;
 import com.example.agrimart.model.Product;
@@ -40,10 +43,21 @@ public class MainActivity extends AppCompatActivity {
     private List<Product> productList = new ArrayList<>();
     private RadioGroup productRadioGroup;
 
+    private ViewPager2 viewPager;
+    private List<Integer> images;
+    private int currentPage = 0;
+    private Handler handler = new Handler();
+    private Runnable runnable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        viewPager = findViewById(R.id.viewPager);
+        initializeSlideshow();
+        startAutoSlide();
+
         productRadioGroup = findViewById(R.id.productRadioGroup);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -75,6 +89,53 @@ public class MainActivity extends AppCompatActivity {
         loadProductsFromFirebase();
     }
 
+    private void initializeSlideshow() {
+        images = new ArrayList<>();
+        images.add(R.drawable.farmer1);
+        images.add(R.drawable.farmer2);
+        images.add(R.drawable.farmer3);
+        images.add(R.drawable.farmer4);
+
+        viewPager.setAdapter(new RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+            @NonNull
+            @Override
+            public RecyclerView.ViewHolder onCreateViewHolder(@NonNull android.view.ViewGroup parent, int viewType) {
+                ImageView imageView = new ImageView(parent.getContext());
+                imageView.setLayoutParams(new android.view.ViewGroup.LayoutParams(
+                        android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+                        android.view.ViewGroup.LayoutParams.MATCH_PARENT));
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setBackgroundResource(R.drawable.btn_shape);
+                return new RecyclerView.ViewHolder(imageView) {
+                };
+            }
+
+            @Override
+            public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+                ((ImageView) holder.itemView).setImageResource(images.get(position));
+            }
+
+            @Override
+            public int getItemCount() {
+                return images.size();
+            }
+        });
+    }
+
+    private void startAutoSlide() {
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                if (currentPage == images.size()) {
+                    currentPage = 0;
+                }
+                viewPager.setCurrentItem(currentPage++, true);
+                handler.postDelayed(this, 4000);
+            }
+        };
+        handler.postDelayed(runnable, 4000);
+    }
+
     private void loadProductsFromFirebase() {
         FirebaseUser user = mAuth.getCurrentUser();
 
@@ -89,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Product product = snapshot.getValue(Product.class);
                         if (product != null) {
-                            product.setId(snapshot.getKey()); // Save Firebase key
+                            product.setId(snapshot.getKey());
                             productList.add(product);
                         }
                     }

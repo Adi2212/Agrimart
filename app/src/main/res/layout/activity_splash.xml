@@ -44,7 +44,6 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:layout_marginBottom="15dp"
-        android:text="Designed By \n Kendre Vishnukant"
+        android:text="Designed By Patil Aditya \n and Kendre Vishnukant"
         android:textColor="@color/white"/>
-
 </LinearLayout>
