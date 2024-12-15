@@ -1,14 +1,15 @@
 package com.example.agrimart;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -38,22 +39,19 @@ public class ProductsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_products);  // Create this layout file
+        setContentView(R.layout.activity_products);
 
         Toolbar toolbar = findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
 
-
-        // Enable back navigation
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
         toolbar.setNavigationIcon(R.drawable.back_icon);
-        // Handle back icon click
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
-        
+
         mAuth = FirebaseAuth.getInstance();
         databaseRef = FirebaseDatabase.getInstance().getReference("Users");
 
@@ -82,7 +80,7 @@ public class ProductsActivity extends AppCompatActivity {
                         }
                     }
 
-                    productAdapter = new ProductAdapter(productList, product -> deleteProductFromFirebase(product, formattedEmail));
+                    productAdapter = new ProductAdapter(productList, product -> confirmDeleteProduct(product, formattedEmail));
                     recyclerView.setAdapter(productAdapter);
                 }
 
@@ -94,6 +92,15 @@ public class ProductsActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "User not logged in.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void confirmDeleteProduct(Product product, String userId) {
+        new AlertDialog.Builder(this)
+                .setTitle("Delete Confirmation")
+                .setMessage("Are you sure you want to delete this product?")
+                .setPositiveButton("Yes", (dialog, which) -> deleteProductFromFirebase(product, userId))
+                .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
+                .show();
     }
 
     private void deleteProductFromFirebase(Product product, String userId) {
