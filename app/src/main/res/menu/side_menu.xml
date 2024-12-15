@@ -12,6 +12,11 @@
                 android:title="Account"
                 app:showAsAction="never" />
             <item
+                android:id="@+id/productsMenuBtn"
+                android:icon="@drawable/products_icon"
+                android:title="Listed Products"
+                app:showAsAction="never" />
+            <item
                 android:id="@+id/logoutMenuBtn"
                 android:icon="@drawable/logout_icon"
                 android:title="Log Out"

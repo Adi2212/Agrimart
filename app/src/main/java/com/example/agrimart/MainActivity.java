@@ -149,7 +149,14 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.logoutMenuBtn) {
             logOut();
         }
+        else if (item.getItemId() == R.id.productsMenuBtn) {
+           totheProducts();
+        }
         return true;
+    }
+
+    private void totheProducts() {
+        startActivity(new Intent(MainActivity.this, ProductsActivity.class));
     }
 
     private void logOut() {

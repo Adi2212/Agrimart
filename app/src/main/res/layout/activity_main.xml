@@ -56,31 +56,46 @@
                 android:paddingLeft="10dp"
                 android:text="To list the product, please click on the button below:"
                 android:textSize="20sp" />
-
-            <RadioGroup
-                android:id="@+id/productRadioGroup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <RadioButton
-                    android:id="@+id/fruitsButton"
+                <RadioGroup
+                    android:id="@+id/productRadioGroup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Fruits"/>
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
 
-                <RadioButton
-                    android:id="@+id/beansButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Beans"/>
+                    <RadioButton
+                        android:id="@+id/fruitsButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@android:color/transparent"
+                        android:background="@drawable/radio_selector"
+                        android:elevation="5dp"
+                        android:padding="16dp"
+                        android:layout_margin="8dp"
+                        android:text="Fruits"/>
 
-                <RadioButton
-                    android:id="@+id/vegiesButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Vegetables"/>
-            </RadioGroup>
+                    <RadioButton
+                        android:id="@+id/beansButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@android:color/transparent"
+                        android:background="@drawable/radio_selector"
+                        android:elevation="5dp"
+                        android:padding="16dp"
+                        android:layout_margin="8dp"
+                        android:text="Beans"/>
+
+                    <RadioButton
+                        android:id="@+id/vegiesButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@android:color/transparent"
+                        android:background="@drawable/radio_selector"
+                        android:elevation="5dp"
+                        android:padding="16dp"
+                        android:layout_margin="8dp"
+                        android:text="Vegetables"/>
+                </RadioGroup>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/ListProduct"

@@ -2,11 +2,15 @@ package com.example.agrimart;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,6 +40,20 @@ public class ProductsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_products);  // Create this layout file
 
+        Toolbar toolbar = findViewById(R.id.toolbar1);
+        setSupportActionBar(toolbar);
+
+
+        // Enable back navigation
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
+        toolbar.setNavigationIcon(R.drawable.back_icon);
+        // Handle back icon click
+        toolbar.setNavigationOnClickListener(view -> onBackPressed());
+        
         mAuth = FirebaseAuth.getInstance();
         databaseRef = FirebaseDatabase.getInstance().getReference("Users");
 
@@ -85,5 +103,29 @@ public class ProductsActivity extends AppCompatActivity {
                     Toast.makeText(ProductsActivity.this, "Product deleted successfully.", Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> Toast.makeText(ProductsActivity.this, "Failed to delete product.", Toast.LENGTH_SHORT).show());
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.side_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.logoutMenuBtn) {
+            logOut();
+        }
+        return true;
+    }
+
+    private void logOut() {
+        SharedPreferences preferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.apply();
+
+        Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(ProductsActivity.this, HomeActivity.class));
+        finish();
     }
 }
