@@ -46,4 +46,5 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation ("com.github.ybq:Android-SpinKit:1.4.0")
+    implementation("com.google.android.gms:play-services-ads:23.6.0")
 }
