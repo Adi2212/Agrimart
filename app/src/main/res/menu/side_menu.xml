@@ -8,7 +8,7 @@
         <menu >
             <item
                 android:id="@+id/accountMenuBtn"
-                android:icon="@drawable/farmer64"
+                android:icon="@drawable/profile_icon"
                 android:title="Account"
                 app:showAsAction="never" />
             <item
@@ -18,7 +18,7 @@
                 app:showAsAction="never" />
             <item
                 android:id="@+id/logoutMenuBtn"
-                android:icon="@drawable/logout"
+                android:icon="@drawable/logout_icon"
                 android:title="Log Out"
                 app:showAsAction="never" />
         </menu>
