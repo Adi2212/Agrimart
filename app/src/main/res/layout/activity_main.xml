@@ -134,7 +134,6 @@
                     android:background="@drawable/btn_shape"/>
             </LinearLayout>
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
