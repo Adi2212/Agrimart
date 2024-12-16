@@ -46,7 +46,7 @@ public class ListProductActivity extends AppCompatActivity {
 
 
         toolbar.setNavigationIcon(R.drawable.back_icon);
-        toolbar.setNavigationOnClickListener(view -> onBackPressed()) ;
+        toolbar.setNavigationOnClickListener(view -> onBackPressed());
 
         // Initialize Firebase
         mAuth = FirebaseAuth.getInstance();

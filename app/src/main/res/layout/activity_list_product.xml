@@ -18,7 +18,7 @@
         app:titleTextColor="@color/white"
         app:title="List Products"
         android:theme="@style/Theme.Material3.Light.NoActionBar"
-        android:popupTheme="@style/Theme.Material3.Light.NoActionBar"  />
+        android:popupTheme="@style/Theme.Material3.Light.NoActionBar"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
