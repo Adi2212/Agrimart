@@ -22,6 +22,8 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.agrimart.adapter.ProductAdapter;
 import com.example.agrimart.model.Product;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -32,6 +34,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -84,6 +90,16 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         databaseRef = FirebaseDatabase.getInstance().getReference("Users");
+
+         MobileAds.initialize(this, new OnInitializationCompleteListener() {
+             @Override
+             public void onInitializationComplete(@NonNull InitializationStatus initializationStatus) {
+
+             }
+         });
+         AdView mAdview=findViewById(R.id.adView);
+        AdRequest adRequest=new AdRequest.Builder().build();
+        mAdview.loadAd(adRequest);
 
     }
 
