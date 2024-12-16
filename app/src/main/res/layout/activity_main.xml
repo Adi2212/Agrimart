@@ -17,18 +17,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/endcolor"
-            android:popupTheme="@style/Theme.Material3.Light.NoActionBar"
+            app:title="@string/app_name"
             android:theme="@style/Theme.Material3.Light.NoActionBar"
-            app:title="@string/app_name" />
+            android:popupTheme="@style/Theme.Material3.Light.NoActionBar" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/primaryfontmarkazi"
+            android:textSize="24sp"
             android:padding="10dp"
+            android:fontFamily="@font/primaryfontmarkazi"
             android:text="Welcome to the AgriMart !!!"
-            android:textAlignment="center"
-            android:textSize="24sp" />
+            android:textAlignment="center" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -38,8 +38,8 @@
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/viewPager"
-                android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_width="match_parent"
                 android:layout_centerInParent="true" />
         </androidx.cardview.widget.CardView>
 
@@ -47,7 +47,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:baselineAligned="false"
             android:orientation="vertical">
 
             <TextView
@@ -57,47 +56,46 @@
                 android:paddingLeft="10dp"
                 android:text="To list the product, please click on the button below:"
                 android:textSize="20sp" />
-
-            <RadioGroup
-                android:id="@+id/productRadioGroup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/fruitsButton"
+                <RadioGroup
+                    android:id="@+id/productRadioGroup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:background="@drawable/radio_selector"
-                    android:button="@android:color/transparent"
-                    android:elevation="5dp"
-                    android:padding="16dp"
-                    android:text="Fruits" />
+                    android:orientation="horizontal"
+                    android:layout_gravity="center">
 
-                <RadioButton
-                    android:id="@+id/beansButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:background="@drawable/radio_selector"
-                    android:button="@android:color/transparent"
-                    android:elevation="5dp"
-                    android:padding="16dp"
-                    android:text="Beans" />
+                    <RadioButton
+                        android:id="@+id/fruitsButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@android:color/transparent"
+                        android:background="@drawable/radio_selector"
+                        android:elevation="5dp"
+                        android:padding="16dp"
+                        android:layout_margin="8dp"
+                        android:text="Fruits"/>
 
-                <RadioButton
-                    android:id="@+id/vegiesButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:background="@drawable/radio_selector"
-                    android:button="@android:color/transparent"
-                    android:elevation="5dp"
-                    android:padding="16dp"
-                    android:text="Vegetables" />
-            </RadioGroup>
+                    <RadioButton
+                        android:id="@+id/beansButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@android:color/transparent"
+                        android:background="@drawable/radio_selector"
+                        android:elevation="5dp"
+                        android:padding="16dp"
+                        android:layout_margin="8dp"
+                        android:text="Beans"/>
+
+                    <RadioButton
+                        android:id="@+id/vegiesButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:button="@android:color/transparent"
+                        android:background="@drawable/radio_selector"
+                        android:elevation="5dp"
+                        android:padding="16dp"
+                        android:layout_margin="8dp"
+                        android:text="Vegetables"/>
+                </RadioGroup>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/ListProduct"
@@ -105,42 +103,21 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/btn_shape"
                 android:padding="10dp"
-                android:text="List Product" />
+                android:text="List Product"
+                android:background="@drawable/btn_shape"/>
         </LinearLayout>
-
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/gotoProducts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:background="@drawable/btn_shape"
             android:padding="10dp"
-            android:text="List Product" />
+            android:text="List Product"
+            android:background="@drawable/btn_shape"/>
 
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginTop="160dp">
-        <com.google.android.gms.ads.AdView
-            xmlns:ads="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/adView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            ads:adSize="BANNER"
-            ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
-            tools:ignore="ExtraText"> 978111">
-        </com.google.android.gms.ads.AdView>
-    </LinearLayout>
     </LinearLayout>
 </ScrollView>
