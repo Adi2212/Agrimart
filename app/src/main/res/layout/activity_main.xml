@@ -1,61 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/endcolor"
-            app:title="@string/app_name"
-            android:theme="@style/Theme.Material3.Light.NoActionBar"
-            android:popupTheme="@style/Theme.Material3.Light.NoActionBar" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:padding="10dp"
-            android:fontFamily="@font/primaryfontmarkazi"
-            android:text="Welcome to the AgriMart !!!"
-            android:textAlignment="center" />
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="220dp"
-            android:layout_margin="10dp"
-            app:cardCornerRadius="20dp">
-
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/viewPager"
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                android:layout_centerInParent="true" />
-        </androidx.cardview.widget.CardView>
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <LinearLayout
+            android:id="@+id/main"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:orientation="vertical">
+            android:layout_gravity="center_horizontal">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/endcolor"
+                app:title="@string/app_name"
+                app:titleTextColor="@color/white"
+                android:theme="@style/Theme.Material3.Light.NoActionBar"
+                android:popupTheme="@style/Theme.Material3.Light.NoActionBar" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:padding="10dp"
                 android:fontFamily="@font/primaryfontmarkazi"
-                android:paddingLeft="10dp"
-                android:text="To list the product, please click on the button below:"
-                android:textSize="20sp" />
+                android:text="Welcome to the AgriMart !!!"
+                android:textAlignment="center" />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="20dp">
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/viewPager"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_centerInParent="true" />
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/primaryfontmarkazi"
+                    android:paddingLeft="10dp"
+                    android:text="To list the product, please click on the button below:"
+                    android:textSize="20sp" />
+
                 <RadioGroup
                     android:id="@+id/productRadioGroup"
                     android:layout_width="wrap_content"
@@ -69,10 +78,11 @@
                         android:layout_height="wrap_content"
                         android:button="@android:color/transparent"
                         android:background="@drawable/radio_selector"
+                        android:textColor="@drawable/text_selector"
                         android:elevation="5dp"
                         android:padding="16dp"
                         android:layout_margin="8dp"
-                        android:text="Fruits"/>
+                        android:text="Fruits" />
 
                     <RadioButton
                         android:id="@+id/beansButton"
@@ -80,10 +90,11 @@
                         android:layout_height="wrap_content"
                         android:button="@android:color/transparent"
                         android:background="@drawable/radio_selector"
+                        android:textColor="@drawable/text_selector"
                         android:elevation="5dp"
                         android:padding="16dp"
                         android:layout_margin="8dp"
-                        android:text="Beans"/>
+                        android:text="Beans" />
 
                     <RadioButton
                         android:id="@+id/vegiesButton"
@@ -91,33 +102,42 @@
                         android:layout_height="wrap_content"
                         android:button="@android:color/transparent"
                         android:background="@drawable/radio_selector"
+                        android:textColor="@drawable/text_selector"
                         android:elevation="5dp"
                         android:padding="16dp"
                         android:layout_margin="8dp"
-                        android:text="Vegetables"/>
+                        android:text="Vegetables" />
                 </RadioGroup>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/ListProduct"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:padding="10dp"
-                android:text="List Product"
-                android:background="@drawable/btn_shape"/>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/ListProduct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:padding="10dp"
+                    android:text="List Product"
+                    android:background="@drawable/btn_shape" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/gotoProducts"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:padding="10dp"
+                    android:text="View Products"
+                    android:background="@drawable/btn_shape" />
+            </LinearLayout>
         </LinearLayout>
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/gotoProducts"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:padding="10dp"
-            android:text="List Product"
-            android:background="@drawable/btn_shape"/>
+    </ScrollView>
 
-
-
-    </LinearLayout>
-</ScrollView>
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="20dp"
+        app:adSize="BANNER"
+        app:adUnitId="ca-app-pub-3940256099942544/6300978111" />
+</LinearLayout>
