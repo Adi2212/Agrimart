@@ -162,16 +162,23 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.logoutMenuBtn) {
+        if (item.getItemId() == R.id.accountMenuBtn) {
+            toAccount();
+        }
+        else if (item.getItemId() == R.id.logoutMenuBtn) {
             logOut();
         }
         else if (item.getItemId() == R.id.productsMenuBtn) {
-           totheProducts();
+           toProducts();
         }
         return true;
     }
 
-    private void totheProducts() {
+    private void toAccount() {
+        startActivity(new Intent(MainActivity.this, AccountActivity.class));
+    }
+
+    private void toProducts() {
         startActivity(new Intent(MainActivity.this, ProductsActivity.class));
     }
 
