@@ -1,5 +1,6 @@
 package com.example.agrimart.adapter;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.agrimart.ListProductActivity;
 import com.example.agrimart.R;
 
 import java.io.IOException;
@@ -45,6 +47,13 @@ public class ProductCardAdapter extends RecyclerView.Adapter<ProductCardAdapter.
         } catch (IOException e) {
             e.printStackTrace();
         }
+        // Set OnClickListener
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, ListProductActivity.class); // Redirect to new activity
+            intent.putExtra("category", getCategoryFromPath(imageNames[position])); // Pass category
+            intent.putExtra("productName", titles[position]); // Pass product name
+            context.startActivity(intent);
+        });
 
         holder.itemText.setText(titles[position]);
     }
@@ -52,6 +61,11 @@ public class ProductCardAdapter extends RecyclerView.Adapter<ProductCardAdapter.
     @Override
     public int getItemCount() {
         return titles.length;
+    }
+
+    private String getCategoryFromPath(String imagePath) {
+        // Extract category from the image path (e.g., "fruits/apple.png" -> "fruits")
+        return imagePath.split("/")[0];
     }
 
     static class ProductViewHolder extends RecyclerView.ViewHolder {
