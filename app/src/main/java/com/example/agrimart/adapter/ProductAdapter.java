@@ -36,9 +36,10 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         Product product = productList.get(position);
         holder.productName.setText("Product Name: " + product.getProductName());
         holder.quantity.setText("Quantity (KG): " + product.getQuantity());
-        holder.phoneNumber.setText("Phone Number: " + product.getPhoneNumber());
+        holder.deleteButton.setOnClickListener(v -> {
+            deleteClickListener.onDeleteClick(product);
+        });
 
-        holder.deleteButton.setOnClickListener(v -> deleteClickListener.onDeleteClick(product));
     }
 
     @Override

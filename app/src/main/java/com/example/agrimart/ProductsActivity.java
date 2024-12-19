@@ -75,7 +75,7 @@ public class ProductsActivity extends AppCompatActivity {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Product product = snapshot.getValue(Product.class);
                         if (product != null) {
-                            product.setId(snapshot.getKey());
+                            product.setKey(snapshot.getKey());
                             productList.add(product);
                         }
                     }
@@ -104,7 +104,7 @@ public class ProductsActivity extends AppCompatActivity {
     }
 
     private void deleteProductFromFirebase(Product product, String userId) {
-        databaseRef.child(userId).child("products").child(product.getId()).removeValue()
+        databaseRef.child(userId).child("products").child(product.getKey()).removeValue()
                 .addOnSuccessListener(aVoid -> {
                     productAdapter.removeProduct(product);
                     Toast.makeText(ProductsActivity.this, "Product deleted successfully.", Toast.LENGTH_SHORT).show();
