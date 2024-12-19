@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
@@ -55,11 +56,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        CardView cardVegetables = findViewById(R.id.card_vegies);
+        CardView cardBeans = findViewById(R.id.card_beans);
+        CardView cardFruits = findViewById(R.id.card_fruits);
+
+        cardVegetables.setOnClickListener(view -> openProductActivity("vegetables"));
+        cardBeans.setOnClickListener(view -> openProductActivity("beans"));
+        cardFruits.setOnClickListener(view -> openProductActivity("fruits"));
+
         viewPager = findViewById(R.id.viewPager);
         initializeSlideshow();
         startAutoSlide();
 
-        productRadioGroup = findViewById(R.id.productRadioGroup);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -70,23 +79,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.ListProduct).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int selectedId = productRadioGroup.getCheckedRadioButtonId();
 
-                if (selectedId == -1) {
-                    Toast.makeText(MainActivity.this, "Please select a product", Toast.LENGTH_SHORT).show();
-                } else {
-                    RadioButton selectedButton = findViewById(selectedId);
-                    String selectedProduct = selectedButton.getText().toString();
-
-                    Intent intent = new Intent(MainActivity.this, ListProductActivity.class);
-                    intent.putExtra("PRODUCT_TYPE", selectedProduct);
-                    startActivity(intent);
-                }
-            }
-        });
 
         mAuth = FirebaseAuth.getInstance();
         databaseRef = FirebaseDatabase.getInstance().getReference("Users");
@@ -101,6 +94,12 @@ public class MainActivity extends AppCompatActivity {
         AdRequest adRequest=new AdRequest.Builder().build();
         mAdview.loadAd(adRequest);
 
+    }
+
+    private void openProductActivity(String category) {
+        Intent intent = new Intent(this, SelectProduct.class);
+        intent.putExtra("category", category);
+        startActivity(intent);
     }
 
     private void initializeSlideshow() {
