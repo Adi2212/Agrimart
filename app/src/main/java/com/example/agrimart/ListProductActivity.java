@@ -22,6 +22,7 @@ public class ListProductActivity extends AppCompatActivity {
 
     private TextView category, productName;
     private EditText etQuantity;
+    private EditText phoneNumber;
     private FirebaseAuth mAuth;
     private DatabaseReference databaseRef;
     private SharedPreferences sharedPreferences;
@@ -52,6 +53,7 @@ public class ListProductActivity extends AppCompatActivity {
         // UI Elements
         Button btnSubmit = findViewById(R.id.btnSubmit);
         etQuantity = findViewById(R.id.etQuantity);
+        phoneNumber = findViewById(R.id.phoneNumber);
 
         String productType = getIntent().getStringExtra("category");
         category.setText(productType);
@@ -79,9 +81,10 @@ public class ListProductActivity extends AppCompatActivity {
         // Get user inputs
         String quantity = etQuantity.getText().toString();
         String listProduct = productName.getText().toString();
-        String productCategory = category.getText().toString(); // Get the category from TextView
+        String productCategory = category.getText().toString();
+        String phoneNumber = this.phoneNumber.getText().toString(); // Corrected line
 
-        if (quantity.isEmpty() || listProduct.isEmpty() || productCategory.isEmpty()) {
+        if (quantity.isEmpty() || listProduct.isEmpty() || productCategory.isEmpty() || phoneNumber.isEmpty()) {
             Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -92,7 +95,7 @@ public class ListProductActivity extends AppCompatActivity {
 
         // Save product data under the specific category
         DatabaseReference categoryRef = databaseRef.child(emailKey).child("products").child(productCategory).push();
-        Product product = new Product(listProduct, quantity);
+        Product product = new Product(listProduct, quantity, phoneNumber);
 
         categoryRef.setValue(product).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {

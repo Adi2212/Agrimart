@@ -84,6 +84,18 @@
                 android:paddingLeft="10dp"
                 android:textColorHint="@color/black" />
 
+            <EditText
+                android:id="@+id/phoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/edittext_shape"
+                android:hint="Enter your PhoneNumber"
+                android:inputType="number"
+                android:padding="5dp"
+                android:paddingLeft="10dp"
+                android:textColorHint="@color/black" />
+
 
             <LinearLayout
                 android:layout_width="220dp"

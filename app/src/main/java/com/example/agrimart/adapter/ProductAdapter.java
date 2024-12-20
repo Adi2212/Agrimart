@@ -5,19 +5,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.agrimart.R;
 import com.example.agrimart.model.Product;
+
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
 
-    private List<Product> productList;
+    private final List<Product> productList;
     private final OnDeleteClickListener deleteClickListener;
 
-
-    // Constructor
     public ProductAdapter(List<Product> productList, OnDeleteClickListener deleteClickListener) {
         this.productList = productList;
         this.deleteClickListener = deleteClickListener;
@@ -35,10 +36,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         Product product = productList.get(position);
         holder.productName.setText("Product Name: " + product.getProductName());
         holder.quantity.setText("Quantity (KG): " + product.getQuantity());
-        holder.deleteButton.setOnClickListener(v -> {
-            deleteClickListener.onDeleteClick(product);
-        });
+        holder.phoneNumber.setText("Phone Number: " + product.getPhoneNumber());
+        holder.deleteButton.setOnClickListener(v -> deleteClickListener.onDeleteClick(product));
+    }
 
+    @Override
+    public int getItemCount() {
+        return productList.size();
     }
 
     public void removeProduct(Product product) {
@@ -53,12 +57,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         void onDeleteClick(Product product);
     }
 
-    @Override
-    public int getItemCount() {
-        return productList.size();
-    }
-
-    // ViewHolder Class
     static class ProductViewHolder extends RecyclerView.ViewHolder {
         TextView productName, phoneNumber, quantity;
         ImageView deleteButton;
@@ -66,10 +64,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
             productName = itemView.findViewById(R.id.productName);
+            phoneNumber = itemView.findViewById(R.id.phoneNumber);
             quantity = itemView.findViewById(R.id.quantity);
             deleteButton = itemView.findViewById(R.id.deleteButton);
         }
     }
-
-
 }
