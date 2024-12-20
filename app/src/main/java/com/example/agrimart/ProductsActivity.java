@@ -1,11 +1,11 @@
 package com.example.agrimart;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -43,14 +43,13 @@ public class ProductsActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
-
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-
         toolbar.setNavigationIcon(R.drawable.back_icon);
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
+
 
         mAuth = FirebaseAuth.getInstance();
         databaseRef = FirebaseDatabase.getInstance().getReference("Users");
@@ -68,24 +67,37 @@ public class ProductsActivity extends AppCompatActivity {
             String userEmail = user.getEmail();
             String formattedEmail = userEmail.replace(".", "_");
 
-            databaseRef.child(formattedEmail).child("products").addListenerForSingleValueEvent(new ValueEventListener() {
+
+
+            // Listen to all product categories
+            databaseRef.child(formattedEmail).child("products").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                     productList.clear();
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        Product product = snapshot.getValue(Product.class);
-                        if (product != null) {
-                            product.setKey(snapshot.getKey());
-                            productList.add(product);
+
+                    // Loop through all categories
+                    for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
+                        for (DataSnapshot productSnapshot : categorySnapshot.getChildren()) {
+                            Product product = productSnapshot.getValue(Product.class);
+                            if (product != null) {
+                                product.setKey(productSnapshot.getKey());
+                                productList.add(product);
+                            }
                         }
                     }
 
-                    productAdapter = new ProductAdapter(productList, product -> confirmDeleteProduct(product, formattedEmail));
-                    recyclerView.setAdapter(productAdapter);
+                    if (productAdapter == null) {
+                        productAdapter = new ProductAdapter(productList, product -> confirmDeleteProduct(product, formattedEmail));
+                        recyclerView.setAdapter(productAdapter);
+                    } else {
+                        productAdapter.notifyDataSetChanged();
+                    }
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
+
                     Toast.makeText(ProductsActivity.this, "Failed to load products.", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -104,9 +116,10 @@ public class ProductsActivity extends AppCompatActivity {
     }
 
     private void deleteProductFromFirebase(Product product, String userId) {
-        databaseRef.child(userId).child("products").child(product.getKey()).removeValue()
+        databaseRef.child(userId).child("products").child(product.getCategory()).child(product.getKey()).removeValue()
                 .addOnSuccessListener(aVoid -> {
-                    productAdapter.removeProduct(product);
+                    productList.remove(product);
+                    productAdapter.notifyDataSetChanged();
                     Toast.makeText(ProductsActivity.this, "Product deleted successfully.", Toast.LENGTH_SHORT).show();
                 })
                 .addOnFailureListener(e -> Toast.makeText(ProductsActivity.this, "Failed to delete product.", Toast.LENGTH_SHORT).show());
