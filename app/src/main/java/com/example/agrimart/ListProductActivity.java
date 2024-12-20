@@ -112,5 +112,4 @@ public class ListProductActivity extends AppCompatActivity {
     }
 
 
-
 }
