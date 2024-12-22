@@ -123,6 +123,7 @@ public class ProductsActivity extends AppCompatActivity {
         return null;
     }
 
+
     private void filterProducts(String query) {
         filteredList.clear();
         for (Product product : productList) {
