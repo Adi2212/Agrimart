@@ -124,6 +124,7 @@ public class ProductsActivity extends AppCompatActivity {
     }
 
 
+
     private void filterProducts(String query) {
         filteredList.clear();
         for (Product product : productList) {
