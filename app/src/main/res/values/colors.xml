@@ -14,4 +14,8 @@
     <color name="cardBackground">#FFFFFF</color>
     <color name="primaryText">#212121</color>
     <color name="titleText">#000000</color>
+
+    <color name="fruitecard">#FFCC80</color>
+    <color name="vegiescard">#81C784</color>
+    <color name="beanscard">#D2B48C</color>
 </resources>

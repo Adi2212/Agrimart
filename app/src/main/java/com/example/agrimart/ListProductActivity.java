@@ -90,8 +90,7 @@ public class ListProductActivity extends AppCompatActivity {
         }
 
         // Format email as key
-        String emailKey = mAuth.getCurrentUser().getEmail()
-                .replace(".", "_");
+        String emailKey = mAuth.getCurrentUser().getEmail().replace(".", "_");
 
         // Save product data under the specific category
         DatabaseReference categoryRef = databaseRef.child(emailKey).child("products").child(productCategory).push();
@@ -99,9 +98,7 @@ public class ListProductActivity extends AppCompatActivity {
 
         categoryRef.setValue(product).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                sharedPreferences.edit()
-                        .putLong(LAST_SUBMISSION_TIME, Calendar.getInstance().getTimeInMillis())
-                        .apply();
+                sharedPreferences.edit().putLong(LAST_SUBMISSION_TIME, Calendar.getInstance().getTimeInMillis()).apply();
 
                 Toast.makeText(ListProductActivity.this, "Data saved successfully!", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(ListProductActivity.this, MainActivity.class));
@@ -110,6 +107,4 @@ public class ListProductActivity extends AppCompatActivity {
             }
         });
     }
-
-
 }

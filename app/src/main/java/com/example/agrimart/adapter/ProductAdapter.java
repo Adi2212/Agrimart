@@ -3,7 +3,7 @@ package com.example.agrimart.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,10 +16,10 @@ import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
 
-    private final List<Product> productList;
-    private final OnDeleteClickListener deleteClickListener;
+    private List<Product> productList;
+    private DeleteButtonClickListener deleteClickListener;
 
-    public ProductAdapter(List<Product> productList, OnDeleteClickListener deleteClickListener) {
+    public ProductAdapter(List<Product> productList,  DeleteButtonClickListener deleteClickListener) {
         this.productList = productList;
         this.deleteClickListener = deleteClickListener;
     }
@@ -34,10 +34,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product product = productList.get(position);
-        holder.productName.setText("Product Name: " + product.getProductName());
-        holder.quantity.setText("Quantity (KG): " + product.getQuantity());
-        holder.phoneNumber.setText("Phone Number: " + product.getPhoneNumber());
-        holder.deleteButton.setOnClickListener(v -> deleteClickListener.onDeleteClick(product));
+        if (product != null){
+            holder.productName.setText("Product Name: " + product.getProductName());
+            holder.quantity.setText("Quantity (KG): " + product.getQuantity());
+            holder.phoneNumber.setText("Phone Number: " + product.getPhoneNumber());
+            holder.deleteButton.setOnClickListener(v -> deleteClickListener.onDeleteClick(product));
+        }
     }
 
     @Override
@@ -45,27 +47,26 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         return productList.size();
     }
 
-    public void removeProduct(Product product) {
-        int position = productList.indexOf(product);
-        if (position != -1) {
-            productList.remove(position);
-            notifyItemRemoved(position);
-        }
+    public void updateProductList(List<Product> updatedList) {
+        this.productList = updatedList;
+        notifyDataSetChanged();
     }
 
-    public interface OnDeleteClickListener {
+
+    public interface DeleteButtonClickListener {
         void onDeleteClick(Product product);
     }
 
-    static class ProductViewHolder extends RecyclerView.ViewHolder {
-        TextView productName, phoneNumber, quantity;
-        ImageView deleteButton;
+    public static class ProductViewHolder extends RecyclerView.ViewHolder {
+
+        TextView productName, quantity, phoneNumber;
+        ImageButton deleteButton;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
             productName = itemView.findViewById(R.id.productName);
-            phoneNumber = itemView.findViewById(R.id.phoneNumber);
             quantity = itemView.findViewById(R.id.quantity);
+            phoneNumber = itemView.findViewById(R.id.phoneNumber);
             deleteButton = itemView.findViewById(R.id.deleteButton);
         }
     }

@@ -20,11 +20,18 @@
             android:popupTheme="@style/Theme.Material3.Light.NoActionBar" />
 
 
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/btn_shape"
+            android:queryHint="Search products..." />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="8dp"/>
-
+            android:layout_margin="8dp" />
 
 </LinearLayout>

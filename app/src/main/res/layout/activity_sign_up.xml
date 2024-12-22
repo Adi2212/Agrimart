@@ -79,14 +79,14 @@
                 <TextView
                     android:id="@+id/signUpLocationTxt"
                     android:layout_width="235dp"
-                    android:layout_height="45dp"
+                    android:layout_height="145dp"
                     android:text="Location :"
                     android:layout_gravity="center_vertical"
                     android:textSize="25dp"/>
 
                 <ImageView
                     android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_height="120dp"
                     android:src="@drawable/location_icon"
                     android:layout_gravity="center"
                     app:tint="@color/black"
