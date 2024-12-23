@@ -1,11 +1,12 @@
 package com.example.agrimart;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.EditText;
+import android.view.View;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -17,8 +18,8 @@ import com.google.firebase.database.ValueEventListener;
 
 public class AccountActivity extends AppCompatActivity {
 
-    private TextView userEmail, totalProducts;
-    private EditText userName, userPhone, userAddress;
+    private TextView userEmail, totalProducts, totalVegetables, totalFruits, totalBeans, userName, userPhone, userLocation;
+    private CardView totalCard;
     private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
 
@@ -31,8 +32,12 @@ public class AccountActivity extends AppCompatActivity {
         userEmail = findViewById(R.id.userEmail);
         userName = findViewById(R.id.userName);
         userPhone = findViewById(R.id.userPhone);
-        userAddress = findViewById(R.id.userAddress);
+        userLocation = findViewById(R.id.userLocation);
         totalProducts = findViewById(R.id.totalProducts);
+        totalVegetables = findViewById(R.id.totalVegetables);
+        totalFruits = findViewById(R.id.totalFruits);
+        totalBeans = findViewById(R.id.totalBeans);
+        totalCard=findViewById(R.id.totalCard);
 
         // Initialize Firebase Auth
         firebaseAuth = FirebaseAuth.getInstance();
@@ -48,9 +53,17 @@ public class AccountActivity extends AppCompatActivity {
             userEmail.setText("No User Logged In");
         }
 
-        // Save Button Listener
-        Button saveButton = findViewById(R.id.saveButton);
-        saveButton.setOnClickListener(v -> saveUserData());
+        totalCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create an Intent to redirect to another activity
+                Intent intent = new Intent(AccountActivity.this, ProductsActivity.class);
+
+                // Start the new activity
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void loadUserData() {
@@ -64,14 +77,29 @@ public class AccountActivity extends AppCompatActivity {
                     String address = dataSnapshot.child("address").getValue(String.class);
 
                     DataSnapshot productsSnapshot = dataSnapshot.child("products");
-                    int productCount = (productsSnapshot.exists()) ? (int) productsSnapshot.getChildrenCount() : 0;
 
-                    // Update UI
+                    // Update user info UI
                     userEmail.setText("Email: " + email);
-                    userName.setText(name);
-                    userPhone.setText(phone);
-                    userAddress.setText(address);
-                    totalProducts.setText("Total Products: " + productCount);
+                    userName.setText("Name: " + name);
+                    userPhone.setText("Phone: " + phone);
+                    userLocation.setText("Address: " + address);
+
+                    // Count products in each category
+                    if (productsSnapshot.exists()) {
+                        int vegetableCount = countProductsInCategory(productsSnapshot, "vegetables");
+                        int fruitCount = countProductsInCategory(productsSnapshot, "fruits");
+                        int beanCount = countProductsInCategory(productsSnapshot, "beans");
+
+                        int totalCount = vegetableCount + fruitCount + beanCount;
+
+                        // Update UI with product counts
+                        totalProducts.setText(String.valueOf(totalCount));
+                        totalVegetables.setText(String.valueOf(vegetableCount));
+                        totalFruits.setText(String.valueOf(fruitCount));
+                        totalBeans.setText(String.valueOf(beanCount));
+                    } else {
+
+                    }
                 } else {
                     userEmail.setText("No data found for this user");
                 }
@@ -80,13 +108,15 @@ public class AccountActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 totalProducts.setText("Error loading data.");
+                totalVegetables.setText("Error loading data.");
+                totalFruits.setText("Error loading data.");
+                totalBeans.setText("Error loading data.");
             }
         });
     }
 
-    private void saveUserData() {
-        databaseReference.child("name").setValue(userName.getText().toString());
-        databaseReference.child("phone").setValue(userPhone.getText().toString());
-        databaseReference.child("address").setValue(userAddress.getText().toString());
+    private int countProductsInCategory(DataSnapshot productsSnapshot, String category) {
+        DataSnapshot categorySnapshot = productsSnapshot.child(category);
+        return categorySnapshot.exists() ? (int) categorySnapshot.getChildrenCount() : 0;
     }
 }

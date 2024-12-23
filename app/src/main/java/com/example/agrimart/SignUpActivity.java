@@ -59,7 +59,6 @@ public class SignUpActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
 
-
         // Initialize the FusedLocationProviderClient
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -97,18 +96,13 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-
     }
-
 
     // Method to check if location services are enabled
     private boolean isLocationEnabled() {
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        return  locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
-
 
     // Method to get the last known location
     private void getLastLocation() {
@@ -125,11 +119,11 @@ public class SignUpActivity extends AppCompatActivity {
                             double latitude = location.getLatitude();
                             double longitude = location.getLongitude();
 
-                            // Use Geocoder to get the nearest location name
+                            // Use Geocoder to get the detailed location
                             address = getAddressFromLocation(latitude, longitude);
 
                             // Update the TextView with the location and address
-                            locationTextView.setText("Location: \t " + address);
+                            locationTextView.setText(address);
                         } else {
                             locationTextView.setText("Location not available");
                             Toast.makeText(SignUpActivity.this, "Location not available", Toast.LENGTH_SHORT).show();
@@ -138,14 +132,46 @@ public class SignUpActivity extends AppCompatActivity {
                 });
     }
 
-    //user signup to firebase
+    // Method to fetch the detailed address
+    private String getAddressFromLocation(double latitude, double longitude) {
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        List<Address> addresses;
+        String locationDetails = "Not Available";
+
+        try {
+            addresses = geocoder.getFromLocation(latitude, longitude, 1);
+            if (addresses != null && !addresses.isEmpty()) {
+                Address address = addresses.get(0);
+
+                String locality = address.getLocality(); // Current location (City or equivalent)
+                //  String taluka = address.getSubLocality(); // Taluka or equivalent
+                String district = address.getSubAdminArea(); // District
+                String state = address.getAdminArea(); // State
+                String country = address.getCountryName(); // Country
+
+                // Construct the full location details
+                locationDetails = String.format(Locale.getDefault(),
+                        "Location: %s, District: %s, State: %s, Nation: %s",
+                        locality != null ? locality : "Not Available",
+                        district != null ? district : "Not Available",
+                        state != null ? state : "Not Available",
+                        country != null ? country : "Not Available");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Failed to get address", Toast.LENGTH_SHORT).show();
+        }
+
+        return locationDetails;
+    }
+
+    // User sign-up in Firebase
     private void registerUser() {
         String name = signUpName.getText().toString().trim();
         String email = signUpEmail.getText().toString().trim();
         String phone = signUpPhone.getText().toString().trim();
         String password = signUpPassword.getText().toString().trim();
         String confirmPassword = signUpConfirmPassword.getText().toString().trim();
-
 
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
@@ -172,31 +198,6 @@ public class SignUpActivity extends AppCompatActivity {
                         Toast.makeText(SignUpActivity.this, "Failed to save user data: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
-    }
-    
-    private String getAddressFromLocation(double latitude, double longitude) {
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-        List<Address> addresses;
-        String locationName = "Not Available";
-
-        try {
-            addresses = geocoder.getFromLocation(latitude, longitude, 1);
-            if (addresses != null && !addresses.isEmpty()) {
-                Address address = addresses.get(0);
-                locationName = address.getLocality();
-                if (locationName == null) {
-                    locationName = address.getSubLocality();
-                    if (locationName == null) {
-                        locationName = address.getThoroughfare();
-                    }
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            Toast.makeText(this, "Failed to get address", Toast.LENGTH_SHORT).show();
-        }
-
-        return locationName;
     }
 
     // Validate the inputs before submitting
@@ -240,7 +241,6 @@ public class SignUpActivity extends AppCompatActivity {
 
         return true; // Return true if all validations pass
     }
-
 
     // Helper method to check if email is valid
     private boolean isValidEmail(String email) {

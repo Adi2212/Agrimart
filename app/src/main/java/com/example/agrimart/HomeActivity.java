@@ -22,10 +22,12 @@ public class HomeActivity extends AppCompatActivity {
 
         SignUpBtn.setOnClickListener((view)->{
             startActivity(new Intent(HomeActivity.this,SignUpActivity.class));
+            finish();
         });
 
         SignInBtn.setOnClickListener((view)->{
             startActivity(new Intent(HomeActivity.this,SignInActivity.class));
+            finish();
         });
 
 

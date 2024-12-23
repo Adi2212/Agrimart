@@ -3,7 +3,6 @@ package com.example.agrimart;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -11,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,12 +35,14 @@ public class ProductsActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ProductAdapter productAdapter;
     private List<Product> productList = new ArrayList<>();
+    private List<Product> filteredList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_products);
 
+        // Initialize toolbar
         Toolbar toolbar = findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -50,18 +52,67 @@ public class ProductsActivity extends AppCompatActivity {
         toolbar.setNavigationIcon(R.drawable.back_icon);
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
 
-
+        // Initialize Firebase and RecyclerView
         mAuth = FirebaseAuth.getInstance();
         databaseRef = FirebaseDatabase.getInstance().getReference("Users");
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Set an empty adapter initially to avoid "No adapter attached" error
-        productAdapter = new ProductAdapter(productList, product -> confirmDeleteProduct(product, getFormattedEmail()));
+        productAdapter = new ProductAdapter(filteredList, product -> confirmDeleteProduct(product));
         recyclerView.setAdapter(productAdapter);
 
+        // Set up SearchView
+        SearchView searchView = findViewById(R.id.searchview);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                filterProducts(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterProducts(newText);
+                return true;
+            }
+        });
+
         loadProductsFromFirebase();
+    }
+
+    private void loadProductsFromFirebase() {
+        String formattedEmail = getFormattedEmail();
+        if (formattedEmail == null) {
+            Toast.makeText(this, "User not logged in.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        databaseRef.child(formattedEmail).child("products").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                productList.clear();
+                for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
+                    for (DataSnapshot productSnapshot : categorySnapshot.getChildren()) {
+                        Product product = productSnapshot.getValue(Product.class);
+                        if (product != null) {
+                            product.setKey(productSnapshot.getKey());
+                            product.setCategory(categorySnapshot.getKey());
+                            productList.add(product);
+                        }
+                    }
+                }
+
+                filteredList.clear();
+                filteredList.addAll(productList);
+                productAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(ProductsActivity.this, "Failed to load products.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private String getFormattedEmail() {
@@ -72,69 +123,47 @@ public class ProductsActivity extends AppCompatActivity {
         return null;
     }
 
-    private void loadProductsFromFirebase() {
-        String formattedEmail = getFormattedEmail();
-        if (formattedEmail == null) {
-            Toast.makeText(this, "User not logged in.", Toast.LENGTH_SHORT).show();
-            return;
+
+
+    private void filterProducts(String query) {
+        filteredList.clear();
+        for (Product product : productList) {
+            if (product.getProductName().toLowerCase().contains(query.toLowerCase())) {
+                filteredList.add(product);
+            }
+            if (product.getCategory().toLowerCase().contains(query.toLowerCase())) {
+                filteredList.add(product);
+            }
         }
-
-        // Listen to all product categories
-        databaseRef.child(formattedEmail).child("products").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                productList.clear();
-
-                // Loop through all categories
-                for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
-                    for (DataSnapshot productSnapshot : categorySnapshot.getChildren()) {
-                        Product product = productSnapshot.getValue(Product.class);
-                        if (product != null) {
-                            product.setKey(productSnapshot.getKey());
-                            product.setCategory(categorySnapshot.getKey()); // Set the category
-                            Log.d("FirebaseData", "Product: " + product.getProductName() + ", Key: " + product.getKey() + ", Category: " + product.getCategory());
-                            productList.add(product);
-                        } else {
-                            Log.e("FirebaseData", "Product is null");
-                        }
-                    }
-                }
-
-                if (productAdapter != null) {
-                    productAdapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(ProductsActivity.this, "Failed to load products.", Toast.LENGTH_SHORT).show();
-            }
-        });
+        productAdapter.notifyDataSetChanged();
     }
 
-    private void confirmDeleteProduct(Product product, String userId) {
+    private void confirmDeleteProduct(Product product) {
         new AlertDialog.Builder(this)
                 .setTitle("Delete Confirmation")
                 .setMessage("Are you sure you want to delete this product?")
-                .setPositiveButton("Yes", (dialog, which) -> deleteProductFromFirebase(product, userId))
+                .setPositiveButton("Yes", (dialog, which) -> deleteProductFromFirebase(product))
                 .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
                 .show();
     }
 
-    private void deleteProductFromFirebase(Product product, String userId) {
-        if (product == null || product.getCategory() == null || product.getKey() == null) {
-            Toast.makeText(ProductsActivity.this, "Error: Could not delete product. Invalid product data.", Toast.LENGTH_SHORT).show();
+    private void deleteProductFromFirebase(Product product) {
+        String formattedEmail = getFormattedEmail();
+        if (formattedEmail == null || product.getCategory() == null || product.getKey() == null) {
+            Toast.makeText(this, "Error: Invalid product data.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        databaseRef.child(userId).child("products").child(product.getCategory()).child(product.getKey()).removeValue()
+        databaseRef.child(formattedEmail).child("products").child(product.getCategory()).child(product.getKey()).removeValue()
                 .addOnSuccessListener(aVoid -> {
-                    productAdapter.removeProduct(product);
-                    Toast.makeText(ProductsActivity.this, "Product deleted successfully.", Toast.LENGTH_SHORT).show();
+                    filteredList.remove(product);
+                    productAdapter.notifyDataSetChanged();
+                    Toast.makeText(this, "Product deleted successfully.", Toast.LENGTH_SHORT).show();
                 })
-                .addOnFailureListener(e -> Toast.makeText(ProductsActivity.this, "Failed to delete product: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                .addOnFailureListener(e -> Toast.makeText(this, "Failed to delete product: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.side_menu, menu);
         return true;
@@ -142,10 +171,26 @@ public class ProductsActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.logoutMenuBtn) {
+        if (item.getItemId() == R.id.accountMenuBtn) {
+            toAccount();
+            return true;
+        } else if (item.getItemId() == R.id.logoutMenuBtn) {
             logOut();
+            return true;
+        } else if (item.getItemId() == R.id.productsMenuBtn) {
+            toProducts();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
-        return true;
+    }
+
+    private void toAccount() {
+        startActivity(new Intent(ProductsActivity.this, AccountActivity.class));
+    }
+
+    private void toProducts() {
+        startActivity(new Intent(ProductsActivity.this, ProductsActivity.class));
     }
 
     private void logOut() {
