@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        getWindow().setStatusBarColor(getResources().getColor(R.color.black));
 
         mAuth = FirebaseAuth.getInstance();
         databaseRef = FirebaseDatabase.getInstance().getReference("Users");

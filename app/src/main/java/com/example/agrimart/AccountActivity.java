@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,6 +28,7 @@ public class AccountActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.black));
 
         // Initialize views
         userEmail = findViewById(R.id.userEmail);
@@ -42,6 +44,17 @@ public class AccountActivity extends AppCompatActivity {
         // Initialize Firebase Auth
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+
+
+        // Initialize toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar1);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+        toolbar.setNavigationIcon(R.drawable.back_icon);
+        toolbar.setNavigationOnClickListener(view -> onBackPressed());
 
         if (currentUser != null) {
             String emailKey = currentUser.getEmail().replace(".", "_");
@@ -80,7 +93,7 @@ public class AccountActivity extends AppCompatActivity {
 
                     // Update user info UI
                     userEmail.setText("Email: " + email);
-                    userName.setText("Name: " + name);
+                    userName.setText("Hey! " + name);
                     userPhone.setText("Phone: " + phone);
                     userLocation.setText("Address: " + address);
 

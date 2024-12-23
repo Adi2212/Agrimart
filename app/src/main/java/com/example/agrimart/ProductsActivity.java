@@ -41,6 +41,7 @@ public class ProductsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_products);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.black));
 
         // Initialize toolbar
         Toolbar toolbar = findViewById(R.id.toolbar1);

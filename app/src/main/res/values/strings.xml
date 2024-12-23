@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AgriMart</string>
+    <string name="app_name">AgriSell</string>
 
 
     <string-array name="dropdown_fruits">

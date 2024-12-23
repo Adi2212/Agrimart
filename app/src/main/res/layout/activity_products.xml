@@ -26,7 +26,13 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:background="@drawable/btn_shape"
-            android:queryHint="Search products..." />
+            android:queryHint="Search products..."
+            android:text="Search products ..."/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+                android:text="Search Products here"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"

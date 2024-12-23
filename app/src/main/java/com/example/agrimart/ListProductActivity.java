@@ -34,6 +34,7 @@ public class ListProductActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_product);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.black));
 
         Toolbar toolbar = findViewById(R.id.toolbar2);
         category = findViewById(R.id.category);
