@@ -151,7 +151,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                 // Construct the full location details
                 locationDetails = String.format(Locale.getDefault(),
-                        "Location: %s, District: %s, State: %s, Nation: %s",
+                        "Location: %s, Division: %s, State: %s, Nation: %s",
                         locality != null ? locality : "Not Available",
                         district != null ? district : "Not Available",
                         state != null ? state : "Not Available",
