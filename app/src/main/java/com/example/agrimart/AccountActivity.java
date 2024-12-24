@@ -3,6 +3,7 @@ package com.example.agrimart;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +22,7 @@ public class AccountActivity extends AppCompatActivity {
 
     private TextView userEmail, totalProducts, totalVegetables, totalFruits, totalBeans, userName, userPhone, userLocation;
     private CardView totalCard;
+    private Button updateInfoButton;
     private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
 
@@ -28,7 +30,7 @@ public class AccountActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
-
+        getWindow().setStatusBarColor(getResources().getColor(R.color.black));
 
         // Initialize views
         userEmail = findViewById(R.id.userEmail);
@@ -40,14 +42,11 @@ public class AccountActivity extends AppCompatActivity {
         totalFruits = findViewById(R.id.totalFruits);
         totalBeans = findViewById(R.id.totalBeans);
         totalCard = findViewById(R.id.totalCard);
-        CardView vegetableCard = findViewById(R.id.vegetableCard);
-        CardView fruitCard = findViewById(R.id.fruitCard);
-        CardView beansCard = findViewById(R.id.beansCard);
+        updateInfoButton = findViewById(R.id.updateInfoButton);
 
         // Initialize Firebase Auth
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-
 
         // Initialize toolbar
         Toolbar toolbar = findViewById(R.id.toolbar1);
@@ -80,16 +79,10 @@ public class AccountActivity extends AppCompatActivity {
             }
         });
 
-        vegetableCard.setOnClickListener(view -> navigateToCategory("Vegetables"));
-        fruitCard.setOnClickListener(view -> navigateToCategory("Fruits"));
-        beansCard.setOnClickListener(view -> navigateToCategory("Beans"));
-
-    }
-
-    private void navigateToCategory(String category) {
-        Intent intent = new Intent(this, ProductsActivity.class); // Replace with your target activity class
-        intent.putExtra("category", category);
-        startActivity(intent);
+        updateInfoButton.setOnClickListener(v -> {
+            Intent intent = new Intent(AccountActivity.this, UpdateUserInfoActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void loadUserData() {
@@ -106,7 +99,7 @@ public class AccountActivity extends AppCompatActivity {
 
                     // Update user info UI
                     userEmail.setText("Email: " + email);
-                    userName.setText("Hey! " + name + "👨‍🌾");
+                    userName.setText("Hey! " + name);
                     userPhone.setText("Phone: " + phone);
                     userLocation.setText("Address: " + address);
 
@@ -123,8 +116,6 @@ public class AccountActivity extends AppCompatActivity {
                         totalVegetables.setText(String.valueOf(vegetableCount));
                         totalFruits.setText(String.valueOf(fruitCount));
                         totalBeans.setText(String.valueOf(beanCount));
-                    } else {
-
                     }
                 } else {
                     userEmail.setText("No data found for this user");

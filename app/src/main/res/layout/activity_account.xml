@@ -12,7 +12,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar1"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:background="@color/endcolor"
         app:titleTextColor="@color/white"
         app:title="Account"
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:text="Hey ! "
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-        android:textColor="@color/black"
+        android:textColor="@color/neon_green"
         android:paddingBottom="8dp"
         android:paddingStart="18dp"
         android:paddingTop="10dp"
@@ -114,6 +114,17 @@
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
             android:textColor="@color/black"
             android:paddingBottom="16dp" />
+
+        <Button
+            android:id="@+id/updateInfoButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="Update Information"
+            android:backgroundTint="@color/endcolor"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+
     </LinearLayout>
 
 

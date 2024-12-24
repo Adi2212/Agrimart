@@ -19,4 +19,8 @@
     <color name="fruitecard">#FFCC80</color>
     <color name="vegiescard">#81C784</color>
     <color name="beanscard">#D2B48C</color>
+
+
+    <color name="neon_green">#39FF14</color> <!-- Neon Green -->
+    <color name="neon_pink">#FF00FF</color> <!-- Neon Pink -->
 </resources>

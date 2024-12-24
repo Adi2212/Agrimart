@@ -21,7 +21,8 @@
             android:popupTheme="@style/Theme.Material3.Light.NoActionBar"
             android:theme="@style/Theme.Material3.Light.NoActionBar"
             app:title="@string/app_name"
-            app:titleTextColor="@color/white" />
+            app:titleTextColor="@color/white"
+            />
 
         <TextView
             android:layout_width="match_parent"
