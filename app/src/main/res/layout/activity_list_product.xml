@@ -52,6 +52,8 @@
                 android:textColor="@color/black"
                 android:textSize="30dp" />
 
+
+
             <TextView
                 android:id="@+id/category"
                 android:layout_width="match_parent"
@@ -84,17 +86,19 @@
                 android:paddingLeft="10dp"
                 android:textColorHint="@color/black" />
 
-            <EditText
-                android:id="@+id/phoneNumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@drawable/edittext_shape"
-                android:hint="Enter Phone Number"
-                android:inputType="number"
-                android:padding="5dp"
-                android:paddingLeft="10dp"
-                android:textColorHint="@color/black" />
+<!--            <EditText-->
+<!--                android:id="@+id/phoneNumber"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_margin="5dp"-->
+<!--                android:background="@drawable/edittext_shape"-->
+<!--                android:hint="Enter Phone Number"-->
+<!--                android:inputType="number"-->
+<!--                android:padding="5dp"-->
+<!--                android:paddingLeft="10dp"-->
+<!--                android:textColorHint="@color/black" />-->
+
+
 
 
             <LinearLayout
