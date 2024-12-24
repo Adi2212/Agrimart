@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,6 +29,7 @@ public class AccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
 
+
         // Initialize views
         userEmail = findViewById(R.id.userEmail);
         userName = findViewById(R.id.userName);
@@ -37,11 +39,25 @@ public class AccountActivity extends AppCompatActivity {
         totalVegetables = findViewById(R.id.totalVegetables);
         totalFruits = findViewById(R.id.totalFruits);
         totalBeans = findViewById(R.id.totalBeans);
-        totalCard=findViewById(R.id.totalCard);
+        totalCard = findViewById(R.id.totalCard);
+        CardView vegetableCard = findViewById(R.id.vegetableCard);
+        CardView fruitCard = findViewById(R.id.fruitCard);
+        CardView beansCard = findViewById(R.id.beansCard);
 
         // Initialize Firebase Auth
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+
+
+        // Initialize toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar1);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+        toolbar.setNavigationIcon(R.drawable.back_icon);
+        toolbar.setNavigationOnClickListener(view -> onBackPressed());
 
         if (currentUser != null) {
             String emailKey = currentUser.getEmail().replace(".", "_");
@@ -64,6 +80,16 @@ public class AccountActivity extends AppCompatActivity {
             }
         });
 
+        vegetableCard.setOnClickListener(view -> navigateToCategory("Vegetables"));
+        fruitCard.setOnClickListener(view -> navigateToCategory("Fruits"));
+        beansCard.setOnClickListener(view -> navigateToCategory("Beans"));
+
+    }
+
+    private void navigateToCategory(String category) {
+        Intent intent = new Intent(this, ProductsActivity.class); // Replace with your target activity class
+        intent.putExtra("category", category);
+        startActivity(intent);
     }
 
     private void loadUserData() {
@@ -80,7 +106,7 @@ public class AccountActivity extends AppCompatActivity {
 
                     // Update user info UI
                     userEmail.setText("Email: " + email);
-                    userName.setText("Name: " + name);
+                    userName.setText("Hey! " + name + "👨‍🌾");
                     userPhone.setText("Phone: " + phone);
                     userLocation.setText("Address: " + address);
 

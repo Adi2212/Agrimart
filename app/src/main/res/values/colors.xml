@@ -2,13 +2,14 @@
 <resources>
     <color name="black">#343131</color>
     <color name="primaryColor">#394A5B</color>
-    <color name="offwhite">#d3d3d3</color>
+    <color name="offwhite">#A0A0A0</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#F95454</color>
     <color name="hinttext">#BDC3C7</color>
     <color name="formCard">#ECEBDE</color>
     <color name="startcolor">#FF7043</color>
     <color name="endcolor">#43A047</color>
+    <color name="endcolor2">#B9DBB9</color>
     <color name="centercolor">#FFFFFF</color>
     <color name="background">#F5F5F5</color>
     <color name="cardBackground">#FFFFFF</color>

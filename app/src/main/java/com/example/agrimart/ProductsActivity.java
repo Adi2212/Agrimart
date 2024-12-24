@@ -36,6 +36,7 @@ public class ProductsActivity extends AppCompatActivity {
     private ProductAdapter productAdapter;
     private List<Product> productList = new ArrayList<>();
     private List<Product> filteredList = new ArrayList<>();
+    String category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,9 @@ public class ProductsActivity extends AppCompatActivity {
 
         // Initialize toolbar
         Toolbar toolbar = findViewById(R.id.toolbar1);
+        SearchView searchView = findViewById(R.id.searchview);
+
+
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -52,6 +56,7 @@ public class ProductsActivity extends AppCompatActivity {
         toolbar.setNavigationIcon(R.drawable.back_icon);
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
 
+
         // Initialize Firebase and RecyclerView
         mAuth = FirebaseAuth.getInstance();
         databaseRef = FirebaseDatabase.getInstance().getReference("Users");
@@ -59,17 +64,23 @@ public class ProductsActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+
+
         productAdapter = new ProductAdapter(filteredList, product -> confirmDeleteProduct(product));
         recyclerView.setAdapter(productAdapter);
 
+
+
         // Set up SearchView
-        SearchView searchView = findViewById(R.id.searchview);
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 filterProducts(query);
+                searchView.clearFocus();
                 return true;
             }
+
 
             @Override
             public boolean onQueryTextChange(String newText) {
@@ -78,7 +89,10 @@ public class ProductsActivity extends AppCompatActivity {
             }
         });
 
+
         loadProductsFromFirebase();
+
+        category = getIntent().getStringExtra("category");
     }
 
     private void loadProductsFromFirebase() {
@@ -90,6 +104,7 @@ public class ProductsActivity extends AppCompatActivity {
 
         databaseRef.child(formattedEmail).child("products").addValueEventListener(new ValueEventListener() {
             @Override
+
             public void onDataChange(DataSnapshot dataSnapshot) {
                 productList.clear();
                 for (DataSnapshot categorySnapshot : dataSnapshot.getChildren()) {
@@ -103,10 +118,16 @@ public class ProductsActivity extends AppCompatActivity {
                     }
                 }
 
-                filteredList.clear();
-                filteredList.addAll(productList);
-                productAdapter.notifyDataSetChanged();
+                // Filter by category if one is provided, otherwise show all products
+                if (category != null) {
+                    filterProductsByCategory(category);
+                } else {
+                    filteredList.clear();
+                    filteredList.addAll(productList);
+                    productAdapter.notifyDataSetChanged();
+                }
             }
+
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -124,19 +145,29 @@ public class ProductsActivity extends AppCompatActivity {
     }
 
 
-
     private void filterProducts(String query) {
         filteredList.clear();
         for (Product product : productList) {
-            if (product.getProductName().toLowerCase().contains(query.toLowerCase())) {
-                filteredList.add(product);
+            if (product.getProductName().toLowerCase().contains(query.toLowerCase()) ||
+                    product.getCategory().toLowerCase().contains(query.toLowerCase())) {
+                if (!filteredList.contains(product)) { // Prevent duplicates
+                    filteredList.add(product);
+                }
             }
-            if (product.getCategory().toLowerCase().contains(query.toLowerCase())) {
+        }
+        productAdapter.notifyDataSetChanged();
+    }
+
+    private void filterProductsByCategory(String category) {
+        filteredList.clear();
+        for (Product product : productList) {
+            if (product.getCategory() != null && product.getCategory().equalsIgnoreCase(category)) {
                 filteredList.add(product);
             }
         }
         productAdapter.notifyDataSetChanged();
     }
+
 
     private void confirmDeleteProduct(Product product) {
         new AlertDialog.Builder(this)

@@ -51,7 +51,7 @@
             <EditText
                 android:layout_width="260dp"
                 android:layout_height="wrap_content"
-                android:inputType="numberPassword"
+                android:inputType="textPassword"
                 android:id="@+id/signInPassword"/>
 
             <androidx.appcompat.widget.AppCompatButton

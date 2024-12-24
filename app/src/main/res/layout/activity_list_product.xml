@@ -13,7 +13,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:background="@color/endcolor"
         app:titleTextColor="@color/white"
         app:title="List Products"
@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:background="@drawable/edittext_shape"
-                android:hint="Enter your PhoneNumber"
+                android:hint="Enter Phone Number"
                 android:inputType="number"
                 android:padding="5dp"
                 android:paddingLeft="10dp"

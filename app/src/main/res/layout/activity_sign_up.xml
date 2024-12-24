@@ -109,7 +109,7 @@
             <EditText
                 android:layout_width="260dp"
                 android:layout_height="wrap_content"
-                android:inputType="numberPassword"
+                android:inputType="textPassword"
                 android:id="@+id/signUpPassword"/>
 
             <TextView
@@ -120,7 +120,7 @@
             <EditText
                 android:layout_width="260dp"
                 android:layout_height="wrap_content"
-                android:inputType="numberPassword"
+                android:inputType="textPassword"
                 android:id="@+id/signUpConfirmPassword"/>
 
             <androidx.appcompat.widget.AppCompatButton
