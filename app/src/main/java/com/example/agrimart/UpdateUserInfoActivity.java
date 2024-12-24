@@ -63,8 +63,6 @@ public class UpdateUserInfoActivity extends AppCompatActivity {
 
         // Update user info in Firebase
         if (databaseReference != null) {
-
-
             databaseReference.child("name").setValue(name);
 
 
