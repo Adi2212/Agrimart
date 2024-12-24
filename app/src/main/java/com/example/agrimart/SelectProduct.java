@@ -60,7 +60,7 @@ public class SelectProduct extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_product);
-        getWindow().setStatusBarColor(getResources().getColor(R.color.black));
+
 
         Toolbar toolbar = findViewById(R.id.toolbar3);
         setSupportActionBar(toolbar);

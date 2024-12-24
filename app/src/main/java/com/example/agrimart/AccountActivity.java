@@ -30,7 +30,7 @@ public class AccountActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
-        getWindow().setStatusBarColor(getResources().getColor(R.color.black));
+
 
         // Initialize views
         userEmail = findViewById(R.id.userEmail);
@@ -79,10 +79,10 @@ public class AccountActivity extends AppCompatActivity {
             }
         });
 
-        updateInfoButton.setOnClickListener(v -> {
-            Intent intent = new Intent(AccountActivity.this, UpdateUserInfoActivity.class);
-            startActivity(intent);
-        });
+//        updateInfoButton.setOnClickListener(v -> {
+//            Intent intent = new Intent(AccountActivity.this, UpdateUserInfoActivity.class);
+//            startActivity(intent);
+//        });
     }
 
     private void loadUserData() {
