@@ -5,7 +5,6 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E7E7E7"
     android:orientation="vertical"
     tools:context=".AccountActivity">
 
@@ -115,17 +114,18 @@
             android:textColor="@color/black"
             android:paddingBottom="16dp" />
 
-        <Button
-            android:id="@+id/updateInfoButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="Update Information"
-            android:backgroundTint="@color/endcolor"
-            android:textColor="@android:color/white"
-            android:textStyle="bold" />
+
 
     </LinearLayout>
+    <Button
+        android:id="@+id/updateInfoButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Update Information"
+        android:backgroundTint="@color/endcolor"
+        android:textColor="@android:color/white"
+        android:textStyle="bold" />
 
 
     <LinearLayout
