@@ -60,7 +60,6 @@ public class UpdateUserInfoActivity extends AppCompatActivity {
             Toast.makeText(UpdateUserInfoActivity.this, "All fields are required", Toast.LENGTH_SHORT).show();
             return;
         }
-
         // Update user info in Firebase
         if (databaseReference != null) {
             databaseReference.child("name").setValue(name);
