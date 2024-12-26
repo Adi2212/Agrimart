@@ -86,4 +86,14 @@
     </string-array>
 
 
+    <string name="my_profile">My Profile</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="change_password">Change Password</string>
+    <string name="change_location">Change Location</string>
+    <string name="app_info">App Information</string>
+    <string name="logout">Log Out</string>
+    <string name="photo_upload">Photo Upload +</string>
+    <string name="save">Save</string>
+
+
 </resources>

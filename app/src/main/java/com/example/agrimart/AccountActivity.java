@@ -42,6 +42,9 @@ public class AccountActivity extends AppCompatActivity {
         totalFruits = findViewById(R.id.totalFruits);
         totalBeans = findViewById(R.id.totalBeans);
         totalCard = findViewById(R.id.totalCard);
+        CardView vegetableCard = findViewById(R.id.vegetableCard);
+        CardView fruitCard = findViewById(R.id.fruitCard);
+        CardView beansCard = findViewById(R.id.beansCard);
         updateInfoButton = findViewById(R.id.updateInfoButton);
 
         // Initialize Firebase Auth
@@ -68,6 +71,10 @@ public class AccountActivity extends AppCompatActivity {
             userEmail.setText("No User Logged In");
         }
 
+        vegetableCard.setOnClickListener(view -> navigateToCategory("Vegetables"));
+        fruitCard.setOnClickListener(view -> navigateToCategory("Fruits"));
+        beansCard.setOnClickListener(view -> navigateToCategory("Beans"));
+
         totalCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,10 +86,16 @@ public class AccountActivity extends AppCompatActivity {
             }
         });
 
-//        updateInfoButton.setOnClickListener(v -> {
-//            Intent intent = new Intent(AccountActivity.this, UpdateUserInfoActivity.class);
-//            startActivity(intent);
-//        });
+        updateInfoButton.setOnClickListener(v -> {
+            Intent intent = new Intent(AccountActivity.this, UpdateUserInfoActivity.class);
+            startActivity(intent);
+        });
+    }
+
+    private void navigateToCategory(String category) {
+        Intent intent = new Intent(this, ProductsActivity.class); // Replace with your target activity class
+        intent.putExtra("category", category);
+        startActivity(intent);
     }
 
     private void loadUserData() {
